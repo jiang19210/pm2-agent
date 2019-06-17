@@ -18,6 +18,9 @@ http.createServer(function (req, res) {
                     let metrics = {};
                     for (let key in axmMonitor) {
                         if (axmMonitor.hasOwnProperty(key)) {
+                            if (key.indexOf('bulldozer_c') > -1) {
+                                continue;
+                            }
                             let val = axmMonitor[key].value + '';
                             key = key.replace(new RegExp(' ', 'g'), '_');
                             let helpType = key;
