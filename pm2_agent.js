@@ -17,9 +17,9 @@ http.createServer(function (req, res) {
                     let metrics = {};
                     for (let key in axmMonitor) {
                         if (axmMonitor.hasOwnProperty(key)) {
-                            let helpType = key;
                             let val = axmMonitor[key].value + '';
                             key = key.replace(new RegExp(' ', 'g'), '_');
+                            let helpType = key;
                             if (val) {
                                 val = val.match(/-{0,1}\d+\.{0,1}\d*/)[0];
                             } else {
