@@ -7,6 +7,7 @@ http.createServer(function (req, res) {
     let pathname = url.parse(req.url).pathname;
     res.writeHead(200);
     if ('/metrics' === pathname) {
+        let metrics = {};
         pm2.list(function (err, list) {
             try {
                 for (let i = 0; i < list.length; i++) {
@@ -15,7 +16,7 @@ http.createServer(function (req, res) {
                     let pid = pm2Info.pid;
                     let pm2Env = pm2Info.pm2_env;
                     let axmMonitor = pm2Env.axm_monitor;
-                    let metrics = {};
+
                     for (let key in axmMonitor) {
                         if (axmMonitor.hasOwnProperty(key)) {
                             if (key.indexOf('bulldozer_c') === -1) {
