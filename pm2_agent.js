@@ -12,6 +12,7 @@ http.createServer(function (req, res) {
                 for (let i = 0; i < list.length; i++) {
                     let pm2Info = list[i];
                     let nodeName = pm2Info.name;
+                    let pid = pm2Info.pid;
                     let pm2Env = pm2Info.pm2_env;
                     let axmMonitor = pm2Env.axm_monitor;
                     let metrics = {};
@@ -29,9 +30,9 @@ http.createServer(function (req, res) {
                             if (key.lastIndexOf(',}') === key.length - 2) {
                                 helpType = key.substr(0, key.indexOf('{'));
                                 key = key.substr(0, key.length - 1);
-                                key = key + 'nodeName="' + nodeName + '",}';
+                                key = key + 'nodeName="' + nodeName + '","' + pid + '",}';
                             } else {
-                                key = key + '{nodeName="' + nodeName + '",}';
+                                key = key + '{nodeName="' + nodeName + '","' + pid + '",}';
                             }
 
                             if (!metrics[helpType]) {
