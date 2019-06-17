@@ -17,7 +17,7 @@ http.createServer(function (req, res) {
                     let metrics = {};
                     for (let key in axmMonitor) {
                         if (axmMonitor.hasOwnProperty(key)) {
-                            let helpType = key.substr(0, key.indexOf('{'));
+                            let helpType = key;
                             let val = axmMonitor[key].value + '';
                             key = key.replace(new RegExp(' ', 'g'), '_');
                             if (val) {
@@ -25,18 +25,21 @@ http.createServer(function (req, res) {
                             } else {
                                 val = -9;
                             }
+
+                            if (key.lastIndexOf(',}') === key.length - 2) {
+                                helpType = key.substr(0, key.indexOf('{'));
+                                key = key.substr(0, key.length - 1);
+                                key = key + 'nodeName="' + nodeName + '",}';
+                            } else {
+                                key = key + '{nodeName="' + nodeName + '",}';
+                            }
+
                             if (!metrics[helpType]) {
                                 metrics[helpType] = 'default';
                                 let HELP = '# HELP ' + helpType + ' HELP.\n';
                                 let TYPE = '# TYPE ' + helpType + ' gauge\n';
                                 res.write(HELP);
                                 res.write(TYPE);
-                            }
-                            if (key.lastIndexOf(',}') === key.length - 2) {
-                                key = key.substr(0, key.length - 1);
-                                key = key + 'nodeName="' + nodeName + '",}';
-                            } else {
-                                key = key + '{nodeName="' + nodeName + '",}';
                             }
                             let record = key + ' ' + val + '\n';
                             res.write(record)
