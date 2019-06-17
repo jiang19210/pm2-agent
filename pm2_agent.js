@@ -30,9 +30,9 @@ http.createServer(function (req, res) {
                             if (key.lastIndexOf(',}') === key.length - 2) {
                                 helpType = key.substr(0, key.indexOf('{'));
                                 key = key.substr(0, key.length - 1);
-                                key = key + 'nodeName="' + nodeName + '","' + pid + '",}';
+                                key = key + 'nodeName="' + nodeName + '",pid="' + pid + '",}';
                             } else {
-                                key = key + '{nodeName="' + nodeName + '","' + pid + '",}';
+                                key = key + '{nodeName="' + nodeName + '",pid="' + pid + '",}';
                             }
 
                             if (!metrics[helpType]) {
