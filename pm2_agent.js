@@ -16,6 +16,8 @@ http.createServer(function (req, res) {
                     let pid = pm2Info.pid;
                     let pm2Env = pm2Info.pm2_env;
                     let axmMonitor = pm2Env.axm_monitor;
+                    let restartTime = pm2Env.restart_time;
+                    axmMonitor.restartTime = {'value': restartTime};
                     for (let key in axmMonitor) {
                         if (axmMonitor.hasOwnProperty(key)) {
                             let val = axmMonitor[key].value + '';
